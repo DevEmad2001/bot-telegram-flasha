@@ -15,6 +15,8 @@ from app.db.connection import Db
 from app.db.schema import init_db
 from app.logging_config import setup_logging
 from app.middlewares.admin_only import AdminOnlyMiddleware
+from app.routers.courses import router as courses_router
+from app.routers.id import router as id_router
 from app.routers.start import router as start_router
 
 
@@ -31,6 +33,8 @@ async def run() -> None:
     dp.callback_query.middleware(AdminOnlyMiddleware(cfg.admin_ids))
 
     dp.include_router(start_router)
+    dp.include_router(id_router)
+    dp.include_router(courses_router)
 
     await dp.start_polling(bot)
 
